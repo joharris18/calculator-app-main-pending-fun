@@ -50,11 +50,17 @@ class MainActivity : AppCompatActivity() {
         tvDisplay = findViewById(R.id.tvDisplay)
 
         //init the buttons and operators
-        numberButtons = arrayOf(button0, button1, button2, button3, button4,
-            button5, button6, button7, button8, button9)
+        numberButtons = arrayOf(
+            button0, button1, button2, button3, button4,
+            button5, button6, button7, button8, button9
+        )
         operatorButtons = listOf(buttonAdd, buttonSub, buttonMul, buttonDiv)
-        for (i in numberButtons) { i.setOnClickListener { numberButtonClick(i) } }
-        for (i in operatorButtons) { i.setOnClickListener { operatorButtonClick(i) } }
+        for (i in numberButtons) {
+            i.setOnClickListener { numberButtonClick(i) }
+        }
+        for (i in operatorButtons) {
+            i.setOnClickListener { operatorButtonClick(i) }
+        }
         buttonEquals.setOnClickListener { buttonEqualClick() }
 
         buttonClear.setOnClickListener { clearButtonClicked() }
@@ -74,16 +80,16 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun clearButtonClicked() {
-           strNumber.clear()
-           operand1 = 0
-           isOperatorClicked = false
-           tvDisplay.text = "0".toInt().toString()
+        strNumber.clear()
+        operand1 = 0
+        isOperatorClicked = false
+        tvDisplay.text = "0".toInt().toString()
     }
 
     private fun buttonEqualClick() {
         try {
             val operand2 = strNumber.toString().toInt()
-            val result = when(operator) {
+            val result = when (operator) {
                 Operator.ADD -> operand1 + operand2
                 Operator.SUB -> operand1 - operand2
                 Operator.MUL -> operand1 * operand2
@@ -95,7 +101,7 @@ class MainActivity : AppCompatActivity() {
             strNumber.append(result.toString())
             updateDisplay()
             isOperatorClicked = true
-        } catch (f:IllegalArgumentException) {
+        } catch (f: IllegalArgumentException) {
             strNumber.clear()
             tvDisplay.text = "0".toInt().toString()
         }
@@ -105,8 +111,7 @@ class MainActivity : AppCompatActivity() {
         try {
             val textValue = strNumber.toString().toInt()
             tvDisplay.text = textValue.toString()
-        }
-        catch (e:IllegalArgumentException) {
+        } catch (e: IllegalArgumentException) {
             strNumber.clear()
             tvDisplay.text = "ERROR"
         }
@@ -114,16 +119,16 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun operatorButtonClick(btn: Button) {
-        if(btn.text == "+") operator = Operator.ADD
-        else if(btn.text == "-") operator = Operator.SUB
-        else if(btn.text == "*") operator = Operator.MUL
-        else if(btn.text == "/") operator = Operator.DIV
+        if (btn.text == "+") operator = Operator.ADD
+        else if (btn.text == "-") operator = Operator.SUB
+        else if (btn.text == "*") operator = Operator.MUL
+        else if (btn.text == "/") operator = Operator.DIV
         else operator = Operator.NONE
         isOperatorClicked = true
     }
 
-    private fun numberButtonClick(btn:Button) {
-        if(isOperatorClicked){
+    private fun numberButtonClick(btn: Button) {
+        if (isOperatorClicked) {
             operand1 = strNumber.toString().toInt()
             strNumber.clear()
             isOperatorClicked = false
@@ -145,4 +150,4 @@ class MainActivity : AppCompatActivity() {
     //endregion
 }
 
-enum class Operator {ADD, SUB, MUL, DIV, NONE}
+enum class Operator { ADD, SUB, MUL, DIV, NONE }
